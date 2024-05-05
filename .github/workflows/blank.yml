@@ -23,6 +23,8 @@ jobs:
       - name: Set up .env file on server
         run: |
           ssh -o "StrictHostKeyChecking no" github@server "
+            cd /srv/cicdts
+            git pull
             touch /srv/cicdts/backend/.env
             echo 'POSTGRES_DB=${{ secrets.POSTGRES_DB }}' >> /srv/cicdts/backend/.env
             echo 'POSTGRES_USER=${{ secrets.POSTGRES_USER }}' >> /srv/cicdts/backend/.env
@@ -34,7 +36,5 @@ jobs:
       - name: Do the deploy thing
         run: |
           ssh -o "StrictHostKeyChecking no" github@server "
-            cd /srv/cicdts
-            git pull
             docker compose up -d
           "
