@@ -37,5 +37,5 @@ jobs:
         run: |
           ssh -o "StrictHostKeyChecking no" github@server "
             cd /srv/cicdts
-            docker compose up -d --build
+            docker compose --env-file ./backend/.env up -d --build
           "
