@@ -36,5 +36,6 @@ jobs:
       - name: Do the deploy thing
         run: |
           ssh -o "StrictHostKeyChecking no" github@server "
+            cd /srv/cicdts
             docker compose up -d
           "
