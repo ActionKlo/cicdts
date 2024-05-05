@@ -31,11 +31,12 @@ jobs:
             echo 'POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}' >> /srv/cicdts/backend/.env
             echo 'PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }}' >> /srv/cicdts/backend/.env
             echo 'PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}' >> /srv/cicdts/backend/.env
-          "
-
-      - name: Do the deploy thing
-        run: |
-          ssh -o "StrictHostKeyChecking no" github@server "
-            cd /srv/cicdts
             docker compose up -d
           "
+
+      # - name: Do the deploy thing
+      #   run: |
+      #     ssh -o "StrictHostKeyChecking no" github@server "
+      #       cd /srv/cicdts
+      #       docker compose up -d
+      #     "
