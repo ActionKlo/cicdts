@@ -13,20 +13,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up .env file on server
-        run: |
-          ssh -o "StrictHostKeyChecking no" user@server "echo 'POSTGRES_DB=${{ secrets.POSTGRES_DB }}' >> /srv/cicdts/backend/.env"
-          ssh -o "StrictHostKeyChecking no" user@server "echo 'POSTGRES_USER=${{ secrets.POSTGRES_USER }}' >> /srv/cicdts/backend/.env"
-          ssh -o "StrictHostKeyChecking no" user@server "echo 'POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}' >> /srv/cicdts/backend/.env"
-          ssh -o "StrictHostKeyChecking no" user@server "echo 'PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }}' >> /srv/cicdts/backend/.env"
-          ssh -o "StrictHostKeyChecking no" user@server "echo 'PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}' >> /srv/cicdts/backend/.env"
-      
       - name: Connect Tailscal
         uses: tailscale/github-action@v2
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
+
+      - name: Set up .env file on server
+        run: |
+          ssh -o "StrictHostKeyChecking no" github@server "echo 'POSTGRES_DB=${{ secrets.POSTGRES_DB }}' >> /srv/cicdts/backend/.env"
+          ssh -o "StrictHostKeyChecking no" github@server "echo 'POSTGRES_USER=${{ secrets.POSTGRES_USER }}' >> /srv/cicdts/backend/.env"
+          ssh -o "StrictHostKeyChecking no" github@server "echo 'POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}' >> /srv/cicdts/backend/.env"
+          ssh -o "StrictHostKeyChecking no" github@server "echo 'PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }}' >> /srv/cicdts/backend/.env"
+          ssh -o "StrictHostKeyChecking no" github@server "echo 'PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}' >> /srv/cicdts/backend/.env"
 
       - name: Do the deploy thing
         run: |
